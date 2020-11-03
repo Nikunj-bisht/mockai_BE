@@ -13,11 +13,6 @@ const nexmo = new Nexmo({
     apiSecret:'6WIpSt4CiqR29yov'
 });
 
-app.get('/index',(req,res)=>{
-
-    res.sendFile(path.join(__dirname , './public','index.html'));
-
-});
 
 const from = 'Vonage APIs';
 const to = '918700719343';
@@ -28,6 +23,11 @@ nexmo.message.sendSms(from,to,text);
 })
 
 
+app.get('/index',(req,res)=>{
+
+    res.sendFile(path.join(__dirname , './public','index.html'));
+
+});
 app.listen(PORT,()=>{
 
 console.log(`Connected to port ${PORT}`);
