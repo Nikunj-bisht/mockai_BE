@@ -20,10 +20,9 @@ mongoose.connect('mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.n
     useNewUrlParser:true,
     useFindAndModify:false
    
-}).then(()=>console.log('connected'));
+});
 
 app.get('/',(req,res)=>{
-console.log(`sent`);
 const nexmo = new Nexmo({
     apiKey:'d8204f2d',
     apiSecret:'6WIpSt4CiqR29yov'
@@ -93,7 +92,6 @@ app.post('/auth/login',async(req,res)=>{
 try{
 
 const user = await  usersinfo.create({name:userid,password:pass});
-console.log(user);
 
 res.send("success");
 }catch(err){
