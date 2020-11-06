@@ -14,7 +14,7 @@ const PORT =process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-mongoose.connect('mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority',{
+mongoose.connect(process.env.MONGO_URL,{
     useUnifiedTopology: true,
     useCreateIndex:true,
     useNewUrlParser:true,
