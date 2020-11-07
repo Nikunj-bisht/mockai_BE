@@ -22,7 +22,7 @@ var mailoptions = {
     from:'callmedudefb@gmail.com',
     to:options.mailid,
     subject:'Undercover',
-    text:options.mess
+    text:options.message
 };
 
 await transporter.sendMail(mailoptions,(error,info)=>{
