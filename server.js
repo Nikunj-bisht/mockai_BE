@@ -8,13 +8,13 @@ const usersinfo = require('./Users');
 const mailerfun = require('./Mailer');
 
 
-
 const PORT =process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-
-mongoose.connect(process.env.MONGO_URL,{
+//
+mongoose.connect(process.env.MONGO_URL
+    ,{
     useUnifiedTopology: true,
     useCreateIndex:true,
     useNewUrlParser:true,
@@ -41,6 +41,13 @@ nexmo.message.sendSms(from,to,text);
 app.get('/index',(req,res)=>{
 
     res.sendFile(path.join(__dirname , './public','index.html'));
+
+});
+
+
+app.get('/urlfor',(req,res)=>{
+
+    res.sendFile(path.join(__dirname , './public','sendfile.html'));
 
 });
 
@@ -74,11 +81,11 @@ x++;
         mailerfun({mailid:gmailid,
             message:mess
         });
-        if(x==100){
+        if(x==20){
             window.clearInterval(recursion);
         }
     },3000);
-      ;
+      
        
      
 

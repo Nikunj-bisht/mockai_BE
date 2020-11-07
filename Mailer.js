@@ -1,4 +1,7 @@
 const nodemailer = require('nodemailer');
+const fs = require('fs').promises;
+const htmltotext = require('html-to-text');
+
 
 const sendfunction =async options =>{
 
@@ -12,12 +15,14 @@ auth:{
 
 });
 
+//const html = await fs.readFile(path.join(__dirname , './public','sendfile.html'))
+
 var mailoptions = {
 
     from:'callmedudefb@gmail.com',
     to:options.mailid,
     subject:'Undercover',
-    text:options.message
+    text:options.mess
 };
 
 await transporter.sendMail(mailoptions,(error,info)=>{
