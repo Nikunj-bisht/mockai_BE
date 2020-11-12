@@ -6,7 +6,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const usersinfo = require('./Users');
 const mailerfun = require('./Mailer');
-
+const loginrouter = require('./routers/router');
 
 const PORT =process.env.PORT || 3000;
 
@@ -75,16 +75,10 @@ app.post('/send/gmail',(req,res)=>{
     const {gmailid,mess} = req.body;
 
 
-   var recursion =  setInterval(()=>{
-x++;
 
-        mailerfun({mailid:gmailid,
+      await  mailerfun({mailid:gmailid,
             message:mess
         });
-        if(x==20){
-            window.clearInterval(recursion);
-        }
-    },3000);
       
        
      
@@ -109,6 +103,9 @@ res.send("success");
 }
 
 });
+
+
+app.use('/check/loggedin',loginrouter);
 
 
 
