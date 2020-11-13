@@ -9,7 +9,7 @@ try{
 
 const user = await usersinfo.find({name:userid});
 
-if(user.password === pass){
+if(user.password == pass){
 
 
     res.send("success");
