@@ -12,8 +12,9 @@ const PORT =process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-//
-mongoose.connect(process.env.MONGO_URL
+//process.env.MONGO_URL//
+mongoose.connect('mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority'
+
     ,{
     useUnifiedTopology: true,
     useCreateIndex:true,
@@ -76,7 +77,7 @@ app.post('/send/gmail',(req,res)=>{
 
 
 
-      await  mailerfun({mailid:gmailid,
+       mailerfun({mailid:gmailid,
             message:mess
         });
       
