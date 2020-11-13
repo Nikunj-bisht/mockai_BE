@@ -9,7 +9,9 @@ try{
 
 const user = await usersinfo.find({name:userid});
 
-if(user.password == pass){
+const password = user.password;
+
+if(password.localeCompare(pass)==0){
 
 
     res.send("success");
