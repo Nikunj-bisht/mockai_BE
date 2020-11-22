@@ -107,6 +107,33 @@ res.send("success");
 });
 
 
+app.get('/getfor/react',async(req,res)=>{
+
+    try{
+
+        const allusers = await usersinfo.find();
+
+        res.json({
+      status:"success",
+         users:allusers
+      
+        })
+      
+
+    }catch(err){
+
+res.json({
+
+status:"error",
+users:null
+
+})
+
+    }
+
+})
+
+
 app.use('/check/loggedin',loginrouter);
 
 
