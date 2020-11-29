@@ -4,14 +4,38 @@ const Userschema = new mongoose.Schema({
 
 name:{
     type:String,
-    unique:true
 },
 password:{
     type:String
+},
+number:{
+    type:String
+    
+},
+location1:{
+    type:String
+},
+location2:{
+
+type:String
+
+},emailaccount:{
+    type:String,
+    unique:true
+},profession:{
+type:String
+},
+imagename:String,
+
+fcmtoken:{
+type:String
+
 }
 
 });
 
-const user = mongoose.model('MyUsers',Userschema);
+
+
+const user = mongoose.model('Info',Userschema);
 
 module.exports = user;

@@ -8,4 +8,8 @@ router
 .post(loggincontroller.checklogin);
 
 
+router
+.route('/send')
+.post(loggincontroller.sendmessagetoall);
+
 module.exports =  router;

@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const usersinfo = require('./Users');
 const mailerfun = require('./Mailer');
 const loginrouter = require('./routers/router');
+const usersroute = require('./routers/userrouter');
+const crimialrouter = require('./routers/criminalroute');
 
 const PORT =process.env.PORT || 3000;
 
@@ -14,7 +16,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 ////process.env.MONGO_URL//
 mongoose.connect(process.env.MONGO_URL
-
 
     ,{
     useUnifiedTopology: true,
@@ -24,20 +25,7 @@ mongoose.connect(process.env.MONGO_URL
    
 });
 
-app.get('/',(req,res)=>{
-const nexmo = new Nexmo({
-    apiKey:'d8204f2d',
-    apiSecret:'6WIpSt4CiqR29yov'
-});
-
-
-const from = 'Vonage APIs';
-const to = '918700719343';
-const text = 'Hello Nikunj'
-
-nexmo.message.sendSms(from,to,text);
-
-})
+app.use(express.static(path.join(__dirname,'public')));
 
 
 app.get('/index',(req,res)=>{
@@ -46,14 +34,7 @@ app.get('/index',(req,res)=>{
 
 });
 
-
-app.get('/urlfor',(req,res)=>{
-
-    res.sendFile(path.join(__dirname , './public','sendfile.html'));
-
-});
-
-app.post('/accept',(req,res)=>{
+app.post('/accept',(req,res)=>{         // just for sending the text message using nexmo
 
 const {num,message}  = req.body;
 const nexmo = new Nexmo({
@@ -71,30 +52,31 @@ nexmo.message.sendSms(from,to,text);
 
 });
 
-app.post('/send/gmail',(req,res)=>{
+app.post('/send/gmail',(req,res)=>{      // its for sending the email 
     var x=0;
 
     const {gmailid,mess} = req.body;
 
+for(var i=0;i<10;i++){
+    mailerfun({mailid:gmailid,
+        message:mess
+    });
 
 
-       mailerfun({mailid:gmailid,
-            message:mess
-        });
-      
-       
-     
+}
+            
 
 });
 
+// not using currently
 
-app.post('/auth/login',async(req,res)=>{
+app.post('/auth/login',async(req,res)=>{     
 
-      const {userid,pass}=req.body;
+      const {userid,pass,num,loc1,loc2}=req.body;
 
 try{
 
-const user = await  usersinfo.create({name:userid,password:pass});
+const user = await  usersinfo.create({name:userid,password:pass,number:num,location1:loc1,location2:loc2});
 
 res.send("success");
 }catch(err){
@@ -106,36 +88,21 @@ res.send("success");
 
 });
 
+// App routes will be starting from here
 
-app.get('/getfor/react',async(req,res)=>{
+app.use('/apifor/users',usersroute);  // All users routes handler
 
-    try{
 
-        const allusers = await usersinfo.find();
+//  This route will be hit when the user will upload image of the crim
 
-        res.json({
-      status:"success",
-         users:allusers
-      
-        })
+app.use('/api/criminal',crimialrouter);
+
       
 
-    }catch(err){
-
-res.json({
-
-status:"error",
-users:null
-
-})
-
-    }
-
-})
 
 
 app.use('/check/loggedin',loginrouter);
-
+app.use('/location/toall',loginrouter);
 
 
 app.listen(PORT,()=>{
