@@ -12,7 +12,9 @@ router
 
 router
 .route('/getusers')
-.get(Usercontroller.getmatchedusers);
+.post(Usercontroller.getmatchedusers);
 
+router.post('/getme',Usercontroller.getcurrentuser);
+router.patch('/updateme',Usercontroller.updateuser);
 
 module.exports = router;

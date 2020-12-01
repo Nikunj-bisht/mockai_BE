@@ -40,23 +40,61 @@ const {location} = req.body;
 
 try{
 
+const 
+
     const users = await userinfo.find({location1:location});
+
 
 
     res.json({
 
-users
+allusers:users
 
     });
 }catch(err){
 
 res.json({
 
-    status:"success"
+    status:"failed"
 });
 
 }
 
+
+
+}
+
+exports.getcurrentuser = async(req,res)=>{ 
+
+const {num} = req.body;
+
+const current =await userinfo.findOne({number:num});
+
+  res.json({
+
+me:current
+
+  })
+
+
+}
+
+exports.updateuser = async(req,res)=>{
+  
+const {nam,num,account} = req.body;
+
+     // const update =await userinfo.find({number:num});
+
+       const updatenow =await userinfo.findOneAndUpdate({emailaccount:account},{name:nam,number:num},function(err,result){
+
+
+           if(err){
+               res.send("error");
+           }else{
+               res.send("noerror");
+           }
+
+       });
 
 
 }
