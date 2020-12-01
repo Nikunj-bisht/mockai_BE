@@ -12,7 +12,7 @@ exports.signupnewuser = async(req,res) =>{
 
 name:nam,
 password:pass,
-number,num,
+number:num,
 location1:loc1,
 location2:loc2,
 emailaccount:email,
