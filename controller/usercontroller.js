@@ -40,8 +40,6 @@ const {location} = req.body;
 
 try{
 
-const 
-
     const users = await userinfo.find({location1:location});
 
 
