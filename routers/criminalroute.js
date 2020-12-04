@@ -5,6 +5,8 @@ const router = express.Router();
 
 
 
-router.post('/uploadimage',Criminalcontroller.createnewcriminal);
+router.patch('/uploadimage',Criminalcontroller.uploadimage,Criminalcontroller.createnewcriminal);
+
+router.post('/getcriminal',Criminalcontroller.getalllocationcrim);
 
 module.exports = router;

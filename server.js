@@ -14,8 +14,9 @@ const PORT =process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-////process.env.MONGO_URL//
+//////
 mongoose.connect(process.env.MONGO_URL
+
 
     ,{
     useUnifiedTopology: true,
@@ -93,7 +94,7 @@ res.send("success");
 app.use('/apifor/users',usersroute);  // All users routes handler
 
 
-//  This route will be hit when the user will upload image of the crim
+//  This route will be hit when the user will upload image of the criminal
 
 app.use('/api/criminal',crimialrouter);
 
