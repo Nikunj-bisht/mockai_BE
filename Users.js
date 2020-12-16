@@ -21,7 +21,6 @@ type:String
 
 },emailaccount:{
     type:String,
-    unique:true
 },profession:{
 type:String
 },
