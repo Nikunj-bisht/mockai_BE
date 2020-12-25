@@ -1,6 +1,6 @@
 
 const userinfo = require('../Users');
-
+const closecont = require('../closecontactsdb');
 
 exports.signupnewuser = async(req,res) =>{
 
@@ -93,6 +93,51 @@ const {nam,num,account} = req.body;
            }
 
        });
+
+
+}
+
+exports.checkforcloseuser = async(req,res)=>{
+
+   const {num} = req.body;
+
+try{
+
+    const user = userinfo.findOne({number:num});
+
+    if(user !=null){
+    
+    res.json({
+        status:"success",
+        youruser:user
+    });
+    
+    }else{
+
+        res.json({
+            status:"failed",
+            youruser:user
+        });    
+    }
+}catch(error){
+    res.send("error");
+}
+}
+
+exports.createclosecontact = async(req,res)=>{
+
+const {usernumber,contactid} = req.body;
+
+try{
+    const create = closecont.create({user:usernumber,closecontact:contactid});
+res.send("created");
+
+}catch(error){
+    res.send('error');
+}
+
+
+
 
 
 }

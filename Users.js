@@ -34,7 +34,6 @@ type:String
 });
 
 
-
 const user = mongoose.model('Info',Userschema);
 
 module.exports = user;
