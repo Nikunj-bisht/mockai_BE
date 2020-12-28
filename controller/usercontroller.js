@@ -103,7 +103,7 @@ exports.checkforcloseuser = async(req,res)=>{
 
 try{
 
-    const user = userinfo.findOne({number:num});
+    const user =await userinfo.findOne({number:num});
 
     if(user !=null){
     
@@ -129,7 +129,7 @@ exports.createclosecontact = async(req,res)=>{
 const {usernumber,contactid} = req.body;
 
 try{
-    const create = closecont.create({user:usernumber,closecontact:contactid});
+    const create =await closecont.create({user:usernumber,closecontact:contactid});
 res.send("created");
 
 }catch(error){
