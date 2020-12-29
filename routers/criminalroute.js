@@ -9,4 +9,6 @@ router.patch('/uploadimage',Criminalcontroller.uploadimage,Criminalcontroller.cr
 
 router.post('/getcriminal',Criminalcontroller.getalllocationcrim);
 
+router.post('/uploadvideo',Criminalcontroller.uploadvideo , Criminalcontroller.createnewvideodis);
+
 module.exports = router;

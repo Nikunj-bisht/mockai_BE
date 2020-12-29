@@ -16,7 +16,10 @@ closecontact:{
 
 Closemember.pre(/^find/,function(next){
 
- this.populate({
+// this will populate the closecontact with the data assosiated
+// with that id whenever the find query will be made
+
+ this.populate({        
     path:'closecontact',
     select:['fcmtoken','number','profession']
 

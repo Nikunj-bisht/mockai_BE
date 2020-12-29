@@ -72,8 +72,8 @@ body {
 
 <input type="text" value="" id="nam" name="crname" placeholder="name">
 
-<input type="text" id ="loc" value="" name="loca" placeholder="location">
-<input type="text" value="" id="des" name="description" placeholder="description">
+<input type="text" id ="loca" value="" name="loca" placeholder="location">
+<input type="text" value="" id="des" name="desc" placeholder="description">
 <input type="file" id = "sub" name="photo">
 <input type="button" id="press">
     </form>
@@ -89,11 +89,11 @@ const button = document.getElementById("press");
 const sendtotheserver = async(data)=>{
 
 const res = await axios({
-    method:'PATCH',
-    url:'/api/criminal/uploadimage',
+    method:'POST',
+    url:'http://127.0.0.1:3000/api/criminal/uploadvideo',
     data
 });
-
+ // '/api/criminal/uploadimage'
 
 }
 
@@ -104,9 +104,9 @@ e.preventDefault();
 
 const form = new FormData();
 form.append("crname",document.getElementById("nam").value);
-form.append("loca",document.getElementById("loc").value);
-form.append("description",document.getElementById("des").value);
-form.append("photo",document.getElementById("sub").files[0]);
+form.append("loct",document.getElementById("loca").value);
+form.append("desc",document.getElementById("des").value);
+form.append("videofile",document.getElementById("sub").files[0]);
 console.log(form.keys);
 
 sendtotheserver(form);

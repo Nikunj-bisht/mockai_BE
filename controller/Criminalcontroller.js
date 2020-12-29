@@ -1,17 +1,36 @@
 const multer = require('multer');
 const criminfo = require('../criminal');
-
+const videosdb = require('../allvideosdatabase');
 
 var multerstorage = multer.diskStorage({
 
 destination:(req,file,cb)=>{
     console.log(file);
+
+if(file.mimetype.startsWith('video')){
+    cb(null,'public/allvideos');
+
+}else{
     cb(null,'public/crimimg');
+
+}
+
 },
 filename:(req,file,cb)=>{
 
+
     const extension = file.mimetype.split('/')[1];
-    cb(null,`criminal-${req.body.crname}.${extension}`);
+
+
+    if(file.mimetype.startsWith('video')){
+        cb(null,`criminal-${req.body.loct}.${extension}`);
+    
+    }else{
+        cb(null,'public/crimimg');
+    
+    }
+
+
 
 
 
@@ -26,8 +45,12 @@ try{
 
         cb(null,true);
     
+    }else if(file.mimetype.startsWith('video')){
+        cb(null,true);
+
     }else{
         cb(res.send("error"),false);
+
     }
 
 }catch(err){
@@ -43,6 +66,34 @@ const upload = multer({
 });
 
 exports.uploadimage = upload.single('photo');
+
+exports.uploadvideo = upload.single('videofile');
+
+exports.createnewvideodis = async(req,res)=>{
+
+  const {loct,desc} = req.body;
+const vd = req.file.filename;
+    const createvideoindb = await videosdb.create({
+
+location:loct,
+description:desc,
+videolocation:vd
+
+    });
+
+    if(createvideoindb!=null){
+
+res.send("OK");
+
+    }else{
+
+res.send("Not ok");
+
+    }
+
+
+}
+
 
 exports.createnewcriminal = async(req,res)=>{
 
