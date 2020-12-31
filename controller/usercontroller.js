@@ -136,8 +136,30 @@ res.send("created");
     res.send('error');
 }
 
+}
 
+exports.findallclosecontacts = async(req,res)=>{
 
+    const {usernumber} = req.body;
 
+try{
+
+    const allclosecontacts = await closecont.find({user:usernumber});
+res.json({
+    status:"success",
+    contacts:allclosecontacts 
+
+});
+
+}catch(error){
+
+res.json({
+    status:"failed"
+});
+
+}
+
+    
+    
 
 }

@@ -22,4 +22,7 @@ router.patch('/updateme',Usercontroller.updateuser);
 
 router.post('/createclosecontact',Usercontroller.createclosecontact); // creating close contact for user 
 
+router.post('/findallclosecontacts',Usercontroller.findallclosecontacts);
+
+
 module.exports = router;
