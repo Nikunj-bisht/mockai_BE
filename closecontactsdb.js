@@ -24,7 +24,7 @@ Closemember.pre(/^find/,function(next){
     select:['fcmtoken','number','profession']
 
  });
-
+next();
 
 });
 
