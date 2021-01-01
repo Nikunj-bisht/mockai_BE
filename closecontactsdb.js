@@ -12,7 +12,12 @@ closecontact:{
 }
 
 
-});
+},{
+    toJSON:{virtuals:true},
+    toObject:{virtuals:true}
+}
+
+);
 
 Closemember.pre(/^find/,function(next){
 
