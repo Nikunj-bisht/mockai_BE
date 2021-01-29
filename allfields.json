@@ -1,0 +1,20 @@
+[
+    {"title":"IT",
+    "description":"Tech interview questions"
+    },
+    {"title":"Sales manager",
+        "description":"Sales manager interview questions"
+        },
+        {"title":"Banking",
+            "description":"Banking intervew questions"
+            },
+            {"title":"Health sector",
+                "description":"Healthcare job interview questions"
+                },
+                {"title":"Biotechnology",
+                    "description":"Biotechnology interview questions"
+                    },
+                    {"title":"Merchant navy",
+                        "description":"Merchant navy interview questions"
+                        }
+]

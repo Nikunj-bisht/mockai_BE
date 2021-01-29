@@ -9,6 +9,8 @@ const mailerfun = require('./Mailer');
 const loginrouter = require('./routers/router');
 const usersroute = require('./routers/userrouter');
 const crimialrouter = require('./routers/criminalroute');
+const Fields = require('./Fields');
+const ques = require("./Iques");
 
 const PORT =process.env.PORT || 3000;
 
@@ -34,6 +36,36 @@ app.get('/index',(req,res)=>{
     res.sendFile(path.join(__dirname , './public','index.html'));
 
 });
+
+app.get('/api/jobssector' , async(req,res)=>{
+
+
+
+  const jobs =   await Fields.find();
+
+  res.json({
+
+  joby:jobs
+
+  })
+
+})
+
+
+
+app.post('/api/questions' , async(req,res)=>{
+
+const {jobprofile} = req.body;
+
+    const questions =   await ques.find({title:jobprofile});
+  
+    res.json({
+  
+    qs:questions
+  
+    })
+  
+  })
 
 app.post('/accept',(req,res)=>{         // just for sending the text message using nexmo
 
