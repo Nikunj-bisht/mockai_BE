@@ -25,12 +25,11 @@ await usersinfo.findByIdAndUpdate(user._id,{fcmtoken:token},function(err){
     if(err){
 
 
-        res.send("success");
-        return;
+        res.send("not found");
 
     }else{
-        res.send("not found");
-return;
+        res.send("success");
+
     }
 
 
