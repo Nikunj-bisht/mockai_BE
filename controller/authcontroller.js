@@ -7,9 +7,11 @@ exports.checklogin = async(req,res)=>{
 
 try{
 
-    const {userid,pass}=req.body;
+    const {userid,pass,token}=req.body;
 
-const user = await usersinfo.findOne({name:userid});
+
+
+const user = await usersinfo.findOne({number:userid});
 console.log(user);
 console.log(user.password);
 
@@ -17,9 +19,25 @@ var password = user.password;
 
 if(password.localeCompare(pass)==0){
 
+await usersinfo.findByIdAndUpdate(user._id,{fcmtoken:token},function(err){
 
-    res.send("success");
+
+    if(err){
+
+
+        res.send("success");
+        return;
+
+    }else{
+        res.send("not found");
 return;
+    }
+
+
+});
+
+
+
 
 }
 
