@@ -68,14 +68,11 @@ body {
 </style>
 
 <body>
-    <form id="for">
+    <form method="POST"  action="/api/accept">
 
-<input type="text" value="" id="nam" name="crname" placeholder="name">
-
-<input type="text" id ="loca" value="" name="loca" placeholder="location">
-<input type="text" value="" id="des" name="desc" placeholder="description">
-<input type="file" id = "sub" name="photo">
-<input type="button" id="press">
+<input type="number" value="" id="num" name="num" placeholder="name">
+<input type="text" value="" id="des" name="message" placeholder="description">
+<input type="submit">
     </form>
 
     <h1>hello</h1>
@@ -90,7 +87,7 @@ const sendtotheserver = async(data)=>{
 
 const res = await axios({
     method:'POST',
-    url:'http://127.0.0.1:3000/api/criminal/uploadvideo',
+    url:'http://127.0.0.1:3000/api/accept',
     data
 });
  // '/api/criminal/uploadimage'
@@ -103,10 +100,8 @@ button.addEventListener('click',(e)=>{
 e.preventDefault();
 
 const form = new FormData();
-form.append("crname",document.getElementById("nam").value);
-form.append("loct",document.getElementById("loca").value);
-form.append("desc",document.getElementById("des").value);
-form.append("videofile",document.getElementById("sub").files[0]);
+form.append("num",document.getElementById("num").value);
+form.append("message",document.getElementById("des").value);
 console.log(form.keys);
 
 sendtotheserver(form);

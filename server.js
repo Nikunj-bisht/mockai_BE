@@ -11,6 +11,7 @@ const usersroute = require('./routers/userrouter');
 const crimialrouter = require('./routers/criminalroute');
 const Fields = require('./Fields');
 const ques = require("./Iques");
+const data = require("./interfront");
 
 const PORT =process.env.PORT || 3000;
 
@@ -67,7 +68,7 @@ const {jobprofile} = req.body;
   
   })
 
-app.post('/accept',(req,res)=>{         // just for sending the text message using nexmo
+app.post('/api/accept',(req,res)=>{         // just for sending the text message using nexmo
 
 const {num,message}  = req.body;
 const nexmo = new Nexmo({
@@ -81,7 +82,7 @@ const to = num.toString();
 const text = message;
 
 nexmo.message.sendSms(from,to,text);
-
+console.log('sent');
 
 });
 
@@ -131,7 +132,15 @@ app.use('/apifor/users',usersroute);  // All users routes handler
 app.use('/api/criminal',crimialrouter);
 
       
+// for interview app
 
+app.get("/tasks" , (req,res)=>{
+
+     var da = data;
+     console.log(da);
+     res.status(200).json(da);
+
+});
 
 
 app.use('/check/loggedin',loginrouter);

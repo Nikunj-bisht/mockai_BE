@@ -23,7 +23,7 @@ filename:(req,file,cb)=>{
 
 
     if(file.mimetype.startsWith('video')){
-        cb(null,`criminal-${req.body.loct}.${extension}`);
+        cb(null,`video_${req.body.filename}.${extension}`);
     
     }else{
         cb(null,'public/crimimg');
