@@ -14,12 +14,12 @@ const ques = require("./Iques");
 const data = require("./interfront");
 const closecont = require('./closecontactsdb');
 const surmodel = require('./survey');
+const sur = require('./scr');
 const PORT =process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 //process.env.MONGO_URL/////mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority
 mongoose.connect(process.env.MONGO_URL
-
     ,{
     useUnifiedTopology: true,
     useCreateIndex:true,
@@ -36,6 +36,12 @@ app.get('/index',(req,res)=>{
     res.sendFile(path.join(__dirname , './public','index.html'));
 
 });
+
+app.get('/c',async (req,res)=>{
+
+await sur();
+
+})
 
 app.get('/api/jobssector' , async(req,res)=>{
 
