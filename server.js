@@ -41,12 +41,14 @@ app.get('/c',async (req,res)=>{
 
 await sur();
 
-})
+});
 
 app.get('/api/jobssector' , async(req,res)=>{
 
-await surmodel.find({name:'counter'});
-
+const counte = await surmodel.findById('616fbd75f1141935cea8a43a');
+console.log(counte);
+const con = counte.counter+1;
+await surmodel.findOneAndUpdate({name:'counter'},{counter:con});
   const jobs =   await Fields.find();
 
   res.json({

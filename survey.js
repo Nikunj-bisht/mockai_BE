@@ -14,11 +14,11 @@ counter:{
 
 });
 
-Surveymodel.post(/^find/,function(next){
+Surveymodel.methods.updatecounter = function(){
 
-this.counter+=1;
-next();
-});
+         this.counter+=1;
+
+}
 
 const surv = mongoose.model('Surveys',Surveymodel);
 
