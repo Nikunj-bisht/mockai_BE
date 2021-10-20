@@ -12,13 +12,13 @@ const crimialrouter = require('./routers/criminalroute');
 const Fields = require('./Fields');
 const ques = require("./Iques");
 const data = require("./interfront");
-
+const closecont = require('./closecontactsdb');
+const surmodel = require('./survey');
 const PORT =process.env.PORT || 3000;
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 //process.env.MONGO_URL/////mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority
-mongoose.connect(process.env.MONGO_URL
+mongoose.connect('mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority'
 
 
     ,{
@@ -40,7 +40,7 @@ app.get('/index',(req,res)=>{
 
 app.get('/api/jobssector' , async(req,res)=>{
 
-
+await surmodel.find({name:'counter'});
 
   const jobs =   await Fields.find();
 
@@ -49,6 +49,13 @@ app.get('/api/jobssector' , async(req,res)=>{
   joby:jobs
 
   })
+
+})
+
+app.get('/a',async(req,res)=>{
+
+ const d =  await closecont.find({_id:'5feb52c95cfd470017e33505',closecontact:'5fda60fc7eab4a0017120270'})
+console.log(d);
 
 })
 
