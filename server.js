@@ -15,22 +15,22 @@ const data = require("./interfront");
 const closecont = require('./closecontactsdb');
 const surmodel = require('./survey');
 const sur = require('./scr');
-const PORT =process.env.PORT || 3000;
+const PORT =  3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-//process.env.MONGO_URL/////mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority
-mongoose.connect(process.env.MONGO_URL
+//process.env.MONGO_URL/////
+//mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority
+//mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority
+//mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority
+mongoose.connect("mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority"
     ,{
     useUnifiedTopology: true,
-    useCreateIndex:true,
-    useNewUrlParser:true,
-    useFindAndModify:false
-   
+    useNewUrlParser:true   
 });
 
 app.use(express.static(path.join(__dirname,'public')));
 
-
+                                                                                                                
 app.get('/index',(req,res)=>{
 
     res.sendFile(path.join(__dirname , './public','index.html'));
@@ -58,6 +58,7 @@ await surmodel.findOneAndUpdate({name:'counter'},{counter:con});
   })
 
 })
+
 
 app.get('/a',async(req,res)=>{
 

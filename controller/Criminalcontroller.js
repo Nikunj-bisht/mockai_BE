@@ -21,7 +21,7 @@ filename:(req,file,cb)=>{
 
     const extension = file.mimetype.split('/')[1];
 
-
+file.originalname
     if(file.mimetype.startsWith('video')){
         cb(null,`video_${req.body.filename}.${extension}`);
     
