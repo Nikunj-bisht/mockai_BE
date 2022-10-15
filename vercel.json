@@ -7,5 +7,5 @@
     "routes": [
        { "src": "/(.*)", "dest": "/index" }
     ]
- }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
+ }
  
