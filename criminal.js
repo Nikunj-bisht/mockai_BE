@@ -1,24 +1,21 @@
 const mongoose = require('mongoose');
 
 const Criminalschema = new mongoose.Schema({
+  crimname: {
+    type: String,
+  },
 
-crimname:{
-    type:String
-},
+  crimetype: {
+    type: String,
+  },
 
-crimetype:{
-    type:String
-},
+  criimage: String,
 
-criimage:String,
+  criminallocation: {
+    type: String,
+  },
+});
 
-criminallocation:{
-type:String
-}
+const Criml = mongoose.model('Criminal', Criminalschema);
 
-
-})
-
-const Criml = mongoose.model('Criminal',Criminalschema);
-
-module.exports = Criml ; 
+module.exports = Criml;

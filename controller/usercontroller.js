@@ -1,165 +1,116 @@
-
 const userinfo = require('../Users');
 const closecont = require('../closecontactsdb');
 
-exports.signupnewuser = async(req,res) =>{
+exports.signupnewuser = async (req, res) => {
+  const { nam, pass, num, loc1, loc2, email, prof, fcm } = req.body;
 
-    const {nam,pass,num,loc1,loc2,email,prof,fcm} = req.body;
+  try {
+    const userdata = await userinfo.create({
+      name: nam,
+      password: pass,
+      number: num,
+      location1: loc1,
+      location2: loc2,
+      emailaccount: email,
+      profession: prof,
+      fcmtoken: fcm,
+    });
 
-    try{
+    res.send('success');
+  } catch (err) {
+    res.send('Sorry try again');
+  }
+};
 
-        const userdata = await userinfo.create({
+exports.getmatchedusers = async (req, res) => {
+  const { location } = req.body;
 
-name:nam,
-password:pass,
-number:num,
-location1:loc1,
-location2:loc2,
-emailaccount:email,
-profession:prof,
-fcmtoken:fcm
-
-        });
-
-res.send('success');
-
-    }
-
-catch(err){
-
-res.send("Sorry try again");
-
-}
-
-}
-
-
-exports.getmatchedusers = async(req,res)=>{
-
-const {location} = req.body;
-
-try{
-
-    const users = await userinfo.find({location1:location});
-
-
+  try {
+    const users = await userinfo.find({ location1: location });
 
     res.json({
-
-allusers:users
-
+      allusers: users,
     });
-}catch(err){
+  } catch (err) {
+    res.json({
+      status: 'failed',
+    });
+  }
+};
 
-res.json({
+exports.getcurrentuser = async (req, res) => {
+  const { num } = req.body;
 
-    status:"failed"
-});
-
-}
-
-
-
-}
-
-exports.getcurrentuser = async(req,res)=>{ 
-
-const {num} = req.body;
-
-const current =await userinfo.findOne({number:num});
+  const current = await userinfo.findOne({ number: num });
 
   res.json({
+    me: current,
+  });
+};
 
-me:current
+exports.updateuser = async (req, res) => {
+  const { nam, num, account } = req.body;
 
-  })
+  // const update =await userinfo.find({number:num});
 
-
-}
-
-exports.updateuser = async(req,res)=>{
-  
-const {nam,num,account} = req.body;
-
-     // const update =await userinfo.find({number:num});
-
-       const updatenow =await userinfo.findOneAndUpdate({emailaccount:account},{name:nam,number:num},function(err,result){
-
-
-           if(err){
-               res.send("error");
-           }else{
-               res.send("noerror");
-           }
-
-       });
-
-
-}
-
-exports.checkforcloseuser = async(req,res)=>{
-
-   const {num} = req.body;
-
-try{
-
-    const user =await userinfo.findOne({number:num});
-
-    if(user !=null){
-    
-    res.json({
-        status:"success",
-        youruser:user
-    });
-    
-    }else{
-
-        res.json({
-            status:"failed",
-            youruser:user
-        });    
+  const updatenow = await userinfo.findOneAndUpdate(
+    { emailaccount: account },
+    { name: nam, number: num },
+    function (err, result) {
+      if (err) {
+        res.send('error');
+      } else {
+        res.send('noerror');
+      }
     }
-}catch(error){
-    res.send("error");
-}
-}
+  );
+};
 
-exports.createclosecontact = async(req,res)=>{
+exports.checkforcloseuser = async (req, res) => {
+  const { num } = req.body;
 
-const {usernumber,contactid} = req.body;
+  try {
+    const user = await userinfo.findOne({ number: num });
 
-try{
-    const create =await closecont.create({user:usernumber,closecontact:contactid});
-res.send("created");
-
-}catch(error){
+    if (user != null) {
+      res.json({
+        status: 'success',
+        youruser: user,
+      });
+    } else {
+      res.json({
+        status: 'failed',
+        youruser: user,
+      });
+    }
+  } catch (error) {
     res.send('error');
-}
+  }
+};
 
-}
+exports.createclosecontact = async (req, res) => {
+  const { usernumber, contactid } = req.body;
 
-exports.findallclosecontacts = async(req,res)=>{
+  try {
+    const create = await closecont.create({ user: usernumber, closecontact: contactid });
+    res.send('created');
+  } catch (error) {
+    res.send('error');
+  }
+};
 
-    const {usernumber} = req.body;
+exports.findallclosecontacts = async (req, res) => {
+  const { usernumber } = req.body;
 
-try{
-
-    const allclosecontacts = await closecont.find({user:usernumber});
-res.json({
-    status:"success",
-    contacts:allclosecontacts 
-
-});
-
-}catch(error){
-
-res.json({
-    status:"failed"
-});
-
-}
-
-    
-    
-
-}
+  try {
+    const allclosecontacts = await closecont.find({ user: usernumber });
+    res.json({
+      status: 'success',
+      contacts: allclosecontacts,
+    });
+  } catch (error) {
+    res.json({
+      status: 'failed',
+    });
+  }
+};
