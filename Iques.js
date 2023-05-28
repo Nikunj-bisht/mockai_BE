@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const fieldschema = new mongoose.Schema({
   title: {
@@ -10,6 +10,6 @@ const fieldschema = new mongoose.Schema({
   },
 });
 
-const quesmodel = mongoose.model("Iquestions", fieldschema);
+const quesmodel = mongoose.model('Iquestions', fieldschema);
 
 module.exports = quesmodel;

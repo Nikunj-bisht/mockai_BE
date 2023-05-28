@@ -1,115 +1,102 @@
 <html>
-
-<head>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>hello</title>
-</head>
+  </head>
 
-<style>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: linear-gradient(#141e30, #243b55);
+    }
+    #nam {
+      width: 100%;
+      padding: 10px 0;
+      font-size: 16px;
+      color: #fff;
+      margin-bottom: 30px;
+      border: none;
+      border-bottom: 1px solid #fff;
+      outline: none;
+      background: transparent;
+    }
+    #loc {
+      width: 100%;
+      padding: 10px 0;
+      font-size: 16px;
+      color: #fff;
+      margin-bottom: 30px;
+      border: none;
+      border-bottom: 1px solid #fff;
+      outline: none;
+      background: transparent;
+    }
+    #des {
+      width: 100%;
+      padding: 10px 0;
+      font-size: 16px;
+      color: #fff;
+      margin-bottom: 30px;
+      border: none;
+      border-bottom: 1px solid #fff;
+      outline: none;
+      background: transparent;
+    }
 
+    #for {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 400px;
+      height: 600px;
+      padding: 40px;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.5);
+      box-sizing: border-box;
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
+    }
+    #press {
+      width: 80px;
+    }
+  </style>
 
-body {
-  margin:0;
-  padding:0;
-  font-family: sans-serif;
-  background: linear-gradient(#141e30, #243b55);
-}
-#nam{
-    width: 100%;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 30px;
-  border: none;
-  border-bottom: 1px solid #fff;
-  outline: none;
-  background: transparent;
-}
-#loc{
-    width: 100%;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 30px;
-  border: none;
-  border-bottom: 1px solid #fff;
-  outline: none;
-  background: transparent;
-}
-#des{
-    width: 100%;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 30px;
-  border: none;
-  border-bottom: 1px solid #fff;
-  outline: none;
-  background: transparent;
-}
-
-#for{
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 400px;
-  height: 600px;
-  padding: 40px;
-  transform: translate(-50%, -50%);
-  background: rgba(0,0,0,.5);
-  box-sizing: border-box;
-  box-shadow: 0 15px 25px rgba(0,0,0,.6);
-  border-radius: 10px;
-}
-#press{
-    width: 80px;
-}
-</style>
-
-<body>
-    <form method="POST"  action="/api/accept">
-
-<input type="number" value="" id="num" name="num" placeholder="name">
-<input type="text" value="" id="des" name="message" placeholder="description">
-<input type="submit">
+  <body>
+    <form method="POST" action="/api/accept">
+      <input type="number" value="" id="num" name="num" placeholder="name" />
+      <input type="text" value="" id="des" name="message" placeholder="description" />
+      <input type="submit" />
     </form>
 
     <h1>hello</h1>
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 
-<script>
+  <script>
+    const button = document.getElementById('press');
 
-const button = document.getElementById("press");
+    const sendtotheserver = async (data) => {
+      const res = await axios({
+        method: 'POST',
+        url: 'http://127.0.0.1:3000/api/accept',
+        data,
+      });
+      // '/api/criminal/uploadimage'
+    };
 
-const sendtotheserver = async(data)=>{
+    if (button) {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
 
-const res = await axios({
-    method:'POST',
-    url:'http://127.0.0.1:3000/api/accept',
-    data
-});
- // '/api/criminal/uploadimage'
+        const form = new FormData();
+        form.append('num', document.getElementById('num').value);
+        form.append('message', document.getElementById('des').value);
+        console.log(form.keys);
 
-}
-
-if(button){
-
-button.addEventListener('click',(e)=>{
-e.preventDefault();
-
-const form = new FormData();
-form.append("num",document.getElementById("num").value);
-form.append("message",document.getElementById("des").value);
-console.log(form.keys);
-
-sendtotheserver(form);
-
-})
-
-}
-
-
-</script>
+        sendtotheserver(form);
+      });
+    }
+  </script>
 </html>
