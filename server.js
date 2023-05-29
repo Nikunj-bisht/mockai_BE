@@ -4,17 +4,18 @@ const Nexmo = require('nexmo');
 const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
-const usersinfo = require('./Users');
-const mailerfun = require('./Mailer');
-const loginrouter = require('./routers/router');
+const usersinfo = require('./models/iam/Users');
+const mailerfun = require('./services/mailer');
+const iamRouter = require('./routers/iam');
 const usersroute = require('./routers/userrouter');
 const crimialrouter = require('./routers/criminalroute');
-const Fields = require('./Fields');
+const Fields = require('./models/jobCategories/Fields');
 const ques = require('./Iques');
-const data = require('./interfront');
-const closecont = require('./closecontactsdb');
-const surmodel = require('./survey');
-const sur = require('./scr');
+// const data = require('./interfront');
+// const closecont = require('./closecontactsdb');
+// const surmodel = require('./survey');
+// const sur = require('./scr');
+const auth = require('./middleware/auth');
 const PORT = 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,13 +23,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority
 //mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority
 //mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority
-mongoose.connect(
-  'mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority',
-  {
+mongoose
+  .connect('mongodb+srv://nicola:qObaF401D1ej4Vj4@cluster0.3uhra.mongodb.net/authusers?retryWrites=true&w=majority', {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-  }
-);
+  })
+  .then(() => {
+    console.log('DB connected!!');
+  })
+  .catch((error) => {
+    console.Consolelog('Connection falied!!', error);
+  });
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -36,26 +41,28 @@ app.get('/index', (req, res) => {
   res.sendFile(path.join(__dirname, './public', 'index.html'));
 });
 
-app.get('/c', async (req, res) => {
-  await sur();
-});
+// users.collection.drop();
 
-app.get('/api/jobssector', async (req, res) => {
-  const counte = await surmodel.findById('616fbd75f1141935cea8a43a');
-  console.log(counte);
-  const con = counte.counter + 1;
-  await surmodel.findOneAndUpdate({ name: 'counter' }, { counter: con });
-  const jobs = await Fields.find();
+// app.get('/c', async (req, res) => {
+//   await sur();
+// });
 
-  res.json({
-    joby: jobs,
-  });
-});
+// app.get('/api/jobssector', async (req, res) => {
+//   const counte = await surmodel.findById('616fbd75f1141935cea8a43a');
+//   console.log(counte);
+//   const con = counte.counter + 1;
+//   await surmodel.findOneAndUpdate({ name: 'counter' }, { counter: con });
+//   const jobs = await Fields.find();
 
-app.get('/a', async (req, res) => {
-  const d = await closecont.find({ _id: '5feb52c95cfd470017e33505', closecontact: '5fda60fc7eab4a0017120270' });
-  console.log(d);
-});
+//   res.json({
+//     joby: jobs,
+//   });
+// });
+
+// app.get('/a', async (req, res) => {
+//   const d = await closecont.find({ _id: '5feb52c95cfd470017e33505', closecontact: '5fda60fc7eab4a0017120270' });
+//   console.log(d);
+// });
 
 //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
 
@@ -128,14 +135,34 @@ app.use('/api/criminal', crimialrouter);
 
 // for interview app
 
-app.get('/tasks', (req, res) => {
-  var da = data;
-  console.log(da);
-  res.status(200).json(da);
+// app.get('/tasks', (req, res) => {
+//   var da = data;
+//   console.log(da);
+//   res.status(200).json(da);
+// });
+
+app.post('/api', async (req, res) => {
+  try {
+    const { name, gender } = req.body;
+
+    if (!(name && gender)) {
+      res.status(401).send('Required!');
+    }
+
+    // usersinfo.
+    const user = await usersinfo.create({
+      name,
+      gender,
+    });
+
+    res.status(201).send('Entry created successfully!!');
+  } catch (err) {}
 });
 
-app.use('/check/loggedin', loginrouter);
-app.use('/location/toall', loginrouter);
+app.use('/user', iamRouter);
+
+// app.use('/check/loggedin', loginrouter);
+// app.use('/location/toall', loginrouter);
 
 app.listen(PORT, () => {
   console.log(`Connected to port ${PORT}`);
