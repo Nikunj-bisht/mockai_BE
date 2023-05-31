@@ -1,4 +1,5 @@
 const userDetailModel = require('../../models/iam/UserDetails');
+const authService = require('../../services/iam/index');
 const user = require('../../models/iam/Users');
 // const user = require('../../models/iam/Users');
 // const user = require('../../models/iam/Users');
@@ -12,6 +13,9 @@ exports.createUser = async (req, res) => {
     if (error) {
       return res.status(400).send('Invalid request:' + JSON.stringify(error.details[0].message));
     } else {
+      if (!(await authService.verifyUser(value.ssoIdToken, value.email))) {
+        return res.status(401).json({ msg: 'Invalid User! ' });
+      }
 
       const isUserExist = await user.find({ email: value.email });
       if (isUserExist.length !== 0) {
@@ -29,9 +33,9 @@ exports.createUser = async (req, res) => {
           userDetail: userDetail._id,
         });
 
-        return res.send('User successfully created!!' + JSON.stringify(userData));
+        return res.send('User successfully created!!' + userData);
       }
-    } 
+    }
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -46,8 +50,8 @@ exports.getUser = async (req, res) => {
       const isUserExist = await user.find({ _id: value.userId });
 
       if (isUserExist.length !== 0) {
-        const userData = await user.findOne({ _id: value.userId }).populate("userDetail");
-        return res.send((userData));
+        const userData = await user.findOne({ _id: value.userId }).populate('userDetail');
+        return res.send(userData);
       } else {
         res.status(404).send('User not exists!');
       }
