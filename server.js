@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
 const usersinfo = require('./models/iam/Users');
-const mailerfun = require('./services/mailer');
 const iamRouter = require('./routers/iam');
 const usersroute = require('./routers/userrouter');
 const crimialrouter = require('./routers/criminalroute');
@@ -76,34 +75,7 @@ app.post('/api/questions', async (req, res) => {
   });
 });
 
-app.post('/api/accept', (req, res) => {
-  // just for sending the text message using nexmo
 
-  const { num, message } = req.body;
-  const nexmo = new Nexmo({
-    apiKey: 'd8204f2d',
-    apiSecret: '6WIpSt4CiqR29yov',
-  });
-
-  console.info(`sent`);
-  const from = 'Vonage APIs';
-  const to = num.toString();
-  const text = message;
-
-  nexmo.message.sendSms(from, to, text);
-  console.log('sent');
-});
-
-app.post('/send/gmail', (req, res) => {
-  // its for sending the email
-  var x = 0;
-
-  const { gmailid, mess } = req.body;
-
-  for (var i = 0; i < 10; i++) {
-    mailerfun({ mailid: gmailid, message: mess });
-  }
-});
 
 // not using currently
 
