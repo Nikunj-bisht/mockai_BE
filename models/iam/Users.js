@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
- 
 
 const Userschema = new mongoose.Schema(
   {
@@ -18,10 +17,13 @@ const Userschema = new mongoose.Schema(
     phoneNumber: {
       type: String,
     },
-    userDetail:{
+    token: {
+      type: String,
+    },
+    userDetail: {
       type: mongoose.Schema.ObjectId,
-      ref:"UserDetail"
-    }
+      ref: 'UserDetail',
+    },
   },
   {
     versionKey: false,
@@ -29,7 +31,5 @@ const Userschema = new mongoose.Schema(
 );
 
 const user = mongoose.model('user', Userschema);
-
-
 
 module.exports = user;

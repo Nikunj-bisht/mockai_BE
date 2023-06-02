@@ -75,8 +75,6 @@ app.post('/api/questions', async (req, res) => {
   });
 });
 
-
-
 // not using currently
 
 app.post('/auth/login', async (req, res) => {
@@ -131,7 +129,7 @@ app.post('/api', async (req, res) => {
   } catch (err) {}
 });
 
-app.use('/user', iamRouter);
+app.use('/api/v1/user', iamRouter);
 
 // app.use('/check/loggedin', loginrouter);
 // app.use('/location/toall', loginrouter);

@@ -9,7 +9,7 @@ class IamValidationSchema {
       .pattern(/[6-9]{1}[0-9]{9}/)
       .message(`Invalid number!!`),
     fcmToken: Joi.string().required(),
-    ssoIdToken: Joi.string()
+    ssoIdToken: Joi.string(),
   });
 
   getUserSchema = Joi.object({

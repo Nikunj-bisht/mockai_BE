@@ -1,3 +1,5 @@
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const userDetailModel = require('../../models/iam/UserDetails');
 const authService = require('../../services/iam/index');
 const user = require('../../models/iam/Users');
@@ -19,13 +21,11 @@ exports.createUser = async (req, res) => {
 
       const isUserExist = await user.find({ email: value.email });
       if (isUserExist.length !== 0) {
-        console.log(await user.find({ email: value.email }));
         res.status(409).send('User with same email id already exists!!');
       } else {
         const userDetail = await userDetailModel.create({
           fcmToken: value.fcmToken,
         });
-        console.log(userDetail, 'user');
         const userData = await user.create({
           ...value,
           created_at: new Date(),
@@ -33,7 +33,12 @@ exports.createUser = async (req, res) => {
           userDetail: userDetail._id,
         });
 
-        return res.send('User successfully created!!' + userData);
+        const token = jwt.sign({ user_id: userData._id }, process.env.TOKEN_KEY, {
+          expiresIn: '2h',
+        });
+        // save user token
+        userData.token = token;
+        return res.status(200).json({ msg: 'User successfully created!!', data: userData });
       }
     }
   } catch (error) {
