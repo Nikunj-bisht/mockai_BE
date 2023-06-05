@@ -14,8 +14,8 @@ router.post('/checkforclosecontact', Usercontroller.checkforcloseuser); // check
 
 router.patch('/updateme', Usercontroller.updateuser);
 
-router.post('/createclosecontact', Usercontroller.createclosecontact); // creating close contact for user
+// router.post('/createclosecontact', Usercontroller.createclosecontact); // creating close contact for user
 
-router.post('/findallclosecontacts', Usercontroller.findallclosecontacts);
+// router.post('/findallclosecontacts', Usercontroller.findallclosecontacts);
 
 module.exports = router;

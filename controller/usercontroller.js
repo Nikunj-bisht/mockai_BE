@@ -1,5 +1,5 @@
-const userinfo = require('../Users');
-const closecont = require('../closecontactsdb');
+const userinfo = require('../models/iam/Users');
+// const closecont = require('../closecontactsdb');
 
 exports.signupnewuser = async (req, res) => {
   const { nam, pass, num, loc1, loc2, email, prof, fcm } = req.body;
@@ -88,29 +88,29 @@ exports.checkforcloseuser = async (req, res) => {
   }
 };
 
-exports.createclosecontact = async (req, res) => {
-  const { usernumber, contactid } = req.body;
+// exports.createclosecontact = async (req, res) => {
+//   const { usernumber, contactid } = req.body;
 
-  try {
-    const create = await closecont.create({ user: usernumber, closecontact: contactid });
-    res.send('created');
-  } catch (error) {
-    res.send('error');
-  }
-};
+//   try {
+//     const create = await closecont.create({ user: usernumber, closecontact: contactid });
+//     res.send('created');
+//   } catch (error) {
+//     res.send('error');
+//   }
+// };
 
-exports.findallclosecontacts = async (req, res) => {
-  const { usernumber } = req.body;
+// exports.findallclosecontacts = async (req, res) => {
+//   const { usernumber } = req.body;
 
-  try {
-    const allclosecontacts = await closecont.find({ user: usernumber });
-    res.json({
-      status: 'success',
-      contacts: allclosecontacts,
-    });
-  } catch (error) {
-    res.json({
-      status: 'failed',
-    });
-  }
-};
+//   try {
+//     const allclosecontacts = await closecont.find({ user: usernumber });
+//     res.json({
+//       status: 'success',
+//       contacts: allclosecontacts,
+//     });
+//   } catch (error) {
+//     res.json({
+//       status: 'failed',
+//     });
+//   }
+// };

@@ -1,6 +1,6 @@
 const usersinfo = require('../../models/auth/Users');
 const Nexmo = require('nexmo');
-const mailerfun = require('../../Mailer');
+const mailerfun = require('../../services/mailer');
 
 exports.checklogin = async (req, res) => {
   try {
