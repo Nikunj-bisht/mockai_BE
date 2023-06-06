@@ -6,9 +6,9 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const usersinfo = require('./models/iam/Users');
 const iamRouter = require('./routers/iam');
+const jobCategoryRouter = require('./routers/jobCategory');
 const usersroute = require('./routers/userrouter');
 const crimialrouter = require('./routers/criminalroute');
-const Fields = require('./models/jobCategories/Fields');
 const ques = require('./Iques');
 // const data = require('./interfront');
 // const closecont = require('./closecontactsdb');
@@ -130,6 +130,7 @@ app.post('/api', async (req, res) => {
 });
 
 app.use('/api/v1/user', iamRouter);
+app.use('/api/v1/jobs', jobCategoryRouter);
 
 // app.use('/check/loggedin', loginrouter);
 // app.use('/location/toall', loginrouter);
