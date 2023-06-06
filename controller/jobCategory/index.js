@@ -20,9 +20,6 @@ exports.createJob = async (req, res) => {
     }
     const jobCategory = await jobsCategory.create({
       ...value,
-
-      // id should be changed to current user's id
-      userId: [{ _id: '647cad2a56836f4658cf10c7' }],
     });
     return res.status(200).send({ message: 'Job successfully created!', data: jobCategory });
   } catch (error) {
